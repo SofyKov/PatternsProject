@@ -22,6 +22,8 @@ public class Student implements LibraryObserver
     private static Student instance;
     //LibraryController controller = LibraryController.getInstance();
     private Connection connection;
+    LibraryObserver lc ;
+    private Connection con = lc;
 
     String sId;
     String name;

@@ -5,6 +5,8 @@
 package com.prog2.labs;
 
 import java.awt.Color;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 /**
  *
@@ -12,11 +14,12 @@ import java.awt.Color;
  */
 public class cantBorrowBook extends javax.swing.JFrame {
 
+
     /**
      * Creates new form cantBorrowBook
      */
-    public cantBorrowBook() 
-    {
+    public cantBorrowBook() {
+
         initComponents();
     }
 
