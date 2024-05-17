@@ -21,8 +21,13 @@ import java.util.logging.Logger;
  *
  * @author grech
  */
+<<<<<<< Updated upstream
 public class LibraryController 
 {
+=======
+public class LibraryController {
+
+>>>>>>> Stashed changes
     //Entities
     Librarian librarian;
     Book book;
@@ -32,12 +37,9 @@ public class LibraryController
     private static LibraryController instance;
 
     public LibraryController() {
-        try 
-        {
+        try {
             this.connection = DriverManager.getConnection("jdbc:sqlite:database.sqlite");
-        } 
-        catch (SQLException ex) 
-        {
+        } catch (SQLException ex) {
             Logger.getLogger(LibraryController.class.getName()).log(Level.SEVERE, null, ex);
         }
         this.book = new Book();
@@ -46,27 +48,22 @@ public class LibraryController
     }
 
     // Static method to get the singleton instance
-    public static LibraryController getInstance()
-    {
-        if (instance == null) 
-        {
+    public static LibraryController getInstance() {
+        if (instance == null) {
             instance = new LibraryController();
         }
         return instance;
     }
 
-    public void setLibrarian(Librarian librarian) 
-    {
+    public void setLibrarian(Librarian librarian) {
         this.librarian = librarian;
     }
 
-    public void setStudent(Student student) 
-    {
+    public void setStudent(Student student) {
         this.student = student;
     }
 
-    public Object createEntity(String person, String... params) 
-    {
+    public Object createEntity(String person, String... params) {
         //Factory patterns:
         Factory_LibraryEntity entityFactory = new Factory_LibraryEntity();
 
@@ -95,15 +92,12 @@ public class LibraryController
 
     }
 
-    public Librarian getLibrarian()
-    {
+    public Librarian getLibrarian() {
         return librarian;
     }
 
-    //move this later
     public void addBook(String SN, String title, String author, String publisher,
-            float price, int quantity, int issued) 
-    {
+            float price, int quantity) {
         Book book = new Book(SN, title, author, publisher, price, quantity);
 
         String query = "select * from book.book";
@@ -169,13 +163,12 @@ public class LibraryController
     public void addBooks(String SN, String title, String author, String publisher,
             float price, int quantity, int issued) {
 
-        Book getBookdb = new Book();
+        Book getBookdb = new Book(SN, title, author, publisher, price, quantity);
 
-        getBookdb.addBook(SN, title, author, publisher, price, quantity, issued);
+        getBookdb.addBook(SN, title, author, publisher, price, quantity);
+        
 
     }
 
     /////STUDENT
-
-
 }

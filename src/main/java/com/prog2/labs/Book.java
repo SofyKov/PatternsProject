@@ -63,8 +63,6 @@ public class Book {
         this.price = price;
         this.quantity = quantity;
         this.issued = 0;
-        this.addedDate = addedDate;
-        this.observers = new ArrayList<>();
     }
 
     //Setters
@@ -133,33 +131,14 @@ public class Book {
         return addedDate;
     }
 
-    //////////////////// OBSERVER DESIGN PATTERN
-    public void addObserver(LibraryObserver observer) {
-        observers.add(observer);
-    }
-
-    public void removeObserver(LibraryObserver observer) {
-        observers.remove(observer);
-    }
-
-    public void notifyObservers() {
-        //notifies observers when a book is return/borrowed
-        for (LibraryObserver observer : observers) {
-            observer.update(this);
-        }
-    }
-
     //////////////////////////////////DATABSE QUERIE///////////////////////
-    public Map<String, String> viewCatalog() 
-    {
+    public Map<String, String> viewCatalog() {
         Map<String, String> catalog = new HashMap<>();
         String sql = "SELECT * FROM Book";
 
-        try (PreparedStatement statement = connection.prepareStatement(sql); 
-                ResultSet resultSet = statement.executeQuery()) {
+        try (PreparedStatement statement = connection.prepareStatement(sql); ResultSet resultSet = statement.executeQuery()) {
 
-            while (resultSet.next()) 
-            {
+            while (resultSet.next()) {
                 // Retrieve book information from the result set
                 String sn = resultSet.getString("sn");
                 String t = resultSet.getString("title");
@@ -176,7 +155,7 @@ public class Book {
                 // Put the title and details into the map
                 catalog.put(t, details);
             }
-            if(catalog.isEmpty()){
+            if (catalog.isEmpty()) {
                 System.out.println("Cannot be found");
             }
         } catch (SQLException e) {
@@ -321,52 +300,47 @@ public class Book {
     }
     
 
+//    public void addBook(String SN, String title, String author, String publisher,
+//            float price, int quantity, int issued) {
     public void addBook(String SN, String title, String author, String publisher,
-            float price, int quantity, int issued) {
-        Book book = new Book(SN, title, author, publisher, price, quantity);
+            float price, int quantity) {
 
-        String query = "select * from book.book";
+        String sql = "INSERT INTO Book (SN, title, author, publisher, price, quantity, issued, addedDate) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
-        try {
-            Calendar calendar = Calendar.getInstance();
-            java.sql.Date currDate = new java.sql.Date(calendar.getTime().getTime());
-
-            String sql = "insert into book (SN, title, author, publisher ,price, quantity, issued, addedDate) values (?, ?, ?, ?, ?, ?, ?, ?)";
-
-            PreparedStatement ps = connection.prepareStatement(sql);
-            ps.setString(0, SN);
-            ps.setString(1, title);
-            ps.setString(2, author);
-            ps.setString(3, publisher);
-            ps.setFloat(4, price);
-            ps.setInt(5, quantity);
-            ps.setInt(6, 0);
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setString(1, SN);
+            ps.setString(2, title);
+            ps.setString(3, author);
+            ps.setString(4, publisher);
+            ps.setFloat(5, price);
+            ps.setInt(6, quantity);
+            ps.setInt(7, this.issued);
 
             LocalDateTime currentTime = LocalDateTime.now();
-
-            // Define a custom date-time format
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-
-            // Format the current time using the custom format
             String formattedTime = currentTime.format(formatter);
 
-            ps.setString(7, formattedTime);
+            ps.setString(8, formattedTime);
 
-            // Step 6: Process the results
-            ps.execute();
-            connection.close();
-            System.out.println(ps.toString());
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
+            ps.executeUpdate();
+            System.out.println("Book added: " + ps.toString());
+        } catch (SQLException e) {
+            System.out.println("Adding book error: " + e.getMessage());
         }
     }
 
+<<<<<<< Updated upstream
     public boolean returnBook(Book book, Student student) 
     {
         try 
         {
             if (student.toReturn(book)) 
             {   // Check if the book is issued to the student
+=======
+    public boolean returnBook(Book book, Student student) {
+        try {
+            if (student.toReturn(book)) { // Check if the book is issued to the student
+>>>>>>> Stashed changes
                 // Update the database (increase quantity, decrease issued copies, delete record)
                 String updateBooksQuery = "UPDATE Books SET quantity = quantity + 1, issued = issued - 1 WHERE sn = ?";
                 PreparedStatement updateBooksStmt = connection.prepareStatement(updateBooksQuery);
@@ -393,4 +367,5 @@ public class Book {
         }
         return false; // Return false if the book was not successfully returned
     }
+
 }

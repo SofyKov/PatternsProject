@@ -49,7 +49,7 @@ public class logInLibrarian extends javax.swing.JFrame {
     private void initComponents() {
 
         jOptionPane2 = new javax.swing.JOptionPane();
-        jLabel1 = new javax.swing.JLabel();
+        loginLabel = new javax.swing.JLabel();
         libID_lbl = new javax.swing.JLabel();
         libPsswd_lbl = new javax.swing.JLabel();
         libIdTextBox = new javax.swing.JTextField();
@@ -63,10 +63,11 @@ public class logInLibrarian extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Librarian - Log In");
 
-        jLabel1.setFont(new java.awt.Font("sansserif", 1, 24)); // NOI18N
-        jLabel1.setText("Log In");
+        loginLabel.setFont(new java.awt.Font("sansserif", 1, 14)); // NOI18N
+        loginLabel.setText("Log In");
 
         libID_lbl.setFont(new java.awt.Font("sansserif", 1, 14)); // NOI18N
+        libID_lbl.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         libID_lbl.setText("Librarian ID:");
 
         libPsswd_lbl.setFont(new java.awt.Font("sansserif", 1, 14)); // NOI18N
@@ -125,44 +126,44 @@ public class logInLibrarian extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(41, 41, 41)
-                .addComponent(libPsswd_lbl, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(libPasswordField, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(46, 46, 46)
+                .addComponent(libID_lbl)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jToggleButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(46, 46, 46)
-                        .addComponent(libID_lbl)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(errorLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 293, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(libIdTextBox, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(179, 179, 179)
-                        .addComponent(jLabel1)))
-                .addGap(0, 5, Short.MAX_VALUE))
+                        .addGap(49, 49, 49)
+                        .addComponent(errorLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 293, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(libIdTextBox, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(back_btn)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(langToggleButton)
+                .addGap(32, 32, 32))
+            .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(103, 103, 103)
-                        .addComponent(submitButton))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(langToggleButton)
-                        .addGap(16, 16, 16))))
+                        .addGap(41, 41, 41)
+                        .addComponent(libPsswd_lbl, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(libPasswordField, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jToggleButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(209, 209, 209)
+                        .addComponent(loginLabel))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(191, 191, 191)
+                        .addComponent(submitButton)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(34, 34, 34)
-                .addComponent(jLabel1)
-                .addGap(18, 18, 18)
+                .addGap(46, 46, 46)
+                .addComponent(loginLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(errorLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -173,16 +174,13 @@ public class logInLibrarian extends javax.swing.JFrame {
                     .addComponent(libPsswd_lbl)
                     .addComponent(libPasswordField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jToggleButton2))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 69, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(submitButton)
-                        .addGap(33, 33, 33))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(back_btn)
-                            .addComponent(langToggleButton))
-                        .addContainerGap())))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 80, Short.MAX_VALUE)
+                .addComponent(submitButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(back_btn)
+                    .addComponent(langToggleButton))
+                .addContainerGap())
         );
 
         pack();
@@ -332,7 +330,7 @@ public class logInLibrarian extends javax.swing.JFrame {
     }
 
     private void updateTexts() {
-        jLabel1.setText(messages.getString("jLabel1"));
+        loginLabel.setText(messages.getString("loginLabel"));
         libID_lbl.setText(messages.getString("libID_lbl"));
         libPsswd_lbl.setText(messages.getString("libPsswd_lbl"));
         submitButton.setText(messages.getString("submitButton"));
@@ -342,7 +340,6 @@ public class logInLibrarian extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton back_btn;
     private javax.swing.JLabel errorLabel;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JOptionPane jOptionPane2;
     private javax.swing.JToggleButton jToggleButton2;
     private javax.swing.JToggleButton langToggleButton;
@@ -350,6 +347,7 @@ public class logInLibrarian extends javax.swing.JFrame {
     private javax.swing.JTextField libIdTextBox;
     private javax.swing.JPasswordField libPasswordField;
     private javax.swing.JLabel libPsswd_lbl;
+    private javax.swing.JLabel loginLabel;
     private javax.swing.JButton submitButton;
     // End of variables declaration//GEN-END:variables
 }

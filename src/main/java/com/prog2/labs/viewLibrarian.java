@@ -4,7 +4,9 @@
  */
 package com.prog2.labs;
 
+import java.util.Locale;
 import java.util.Map;
+import java.util.ResourceBundle;
 
 /**
  *
@@ -15,11 +17,15 @@ public class viewLibrarian extends javax.swing.JFrame {
     /**
      * Creates new form viewLibrarian
      */
+    ResourceBundle messages;
+
     //Singleton
     LibraryController controller = LibraryController.getInstance();
 
     public viewLibrarian() {
         initComponents();
+        messages = ResourceBundle.getBundle("messages", Locale.getDefault());
+
     }
 
     /**
@@ -87,6 +93,11 @@ public class viewLibrarian extends javax.swing.JFrame {
         });
 
         langToggleBtn.setText("FR");
+        langToggleBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                langToggleBtnActionPerformed(evt);
+            }
+        });
 
         vL_Heading.setFont(new java.awt.Font("Palatino Linotype", 0, 24)); // NOI18N
         vL_Heading.setText("WELCOME LIBRARIAN");
@@ -172,7 +183,12 @@ public class viewLibrarian extends javax.swing.JFrame {
 
     private void newBook_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newBook_btnActionPerformed
         // TODO add your handling code here:
+
         //addBook(String SN, String title, String author, String publisher, float price, int quantity, int issued)
+        addNewBook add = new addNewBook();
+        add.show();
+        this.hide();
+
     }//GEN-LAST:event_newBook_btnActionPerformed
 
     private void borrowedBooks_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_borrowedBooks_btnActionPerformed
@@ -184,7 +200,7 @@ public class viewLibrarian extends javax.swing.JFrame {
 
         String category = "Borrowed Books";
 
-         Map<String, String> s = controller.viewIssuedBooks();
+        Map<String, String> s = controller.viewIssuedBooks();
 
         viewAllBooks viewBooks = new viewAllBooks(category, s);
         viewBooks.setVisible(true);
@@ -193,14 +209,34 @@ public class viewLibrarian extends javax.swing.JFrame {
 
     private void issueABook_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_issueABook_btnActionPerformed
         // TODO add your handling code here:
+<<<<<<< Updated upstream
         
+=======
+
+
+>>>>>>> Stashed changes
     }//GEN-LAST:event_issueABook_btnActionPerformed
 
     private void returnBook_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_returnBook_btnActionPerformed
         // TODO add your handling code here:
-        
-        
+
+
     }//GEN-LAST:event_returnBook_btnActionPerformed
+
+    private void langToggleBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_langToggleBtnActionPerformed
+        // TODO add your handling code here:
+
+        if (langToggleBtn.isSelected()) {
+            //french
+            messages = ResourceBundle.getBundle("messages", Locale.FRENCH);
+            updateTexts();
+
+        } else {
+            //english
+            messages = ResourceBundle.getBundle("messages", Locale.ENGLISH);
+            updateTexts();
+        }
+    }//GEN-LAST:event_langToggleBtnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -216,16 +252,24 @@ public class viewLibrarian extends javax.swing.JFrame {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
+
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(viewLibrarian.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(viewLibrarian.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(viewLibrarian.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(viewLibrarian.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(viewLibrarian.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(viewLibrarian.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(viewLibrarian.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(viewLibrarian.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
@@ -235,6 +279,17 @@ public class viewLibrarian extends javax.swing.JFrame {
                 new viewLibrarian().setVisible(true);
             }
         });
+    }
+
+    private void updateTexts() {
+        allBooks_btn.setText(messages.getString("allBooks_btn"));
+        borrowedBooks_btn.setText(messages.getString("borrowedBooks_btn"));
+        issueABook_btn.setText(messages.getString("issueABook_btn"));
+        logOut_btn.setText(messages.getString("logOut_btn"));
+        newBook_btn.setText(messages.getString("newBook_btn"));
+        returnBook_btn.setText(messages.getString("returnBook_btn"));
+        vL_Heading.setText(messages.getString("vL_Heading"));
+
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

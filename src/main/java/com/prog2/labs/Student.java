@@ -23,7 +23,11 @@ public class Student implements LibraryObserver
     //LibraryController controller = LibraryController.getInstance();
     private Connection connection;
     LibraryObserver lc ;
+<<<<<<< Updated upstream
     private Connection con;
+=======
+    private Connection con ;
+>>>>>>> Stashed changes
 
     String sId;
     String name;

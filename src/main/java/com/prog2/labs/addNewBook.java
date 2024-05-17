@@ -4,6 +4,9 @@
  */
 package com.prog2.labs;
 
+import java.util.Locale;
+import java.util.ResourceBundle;
+
 /**
  *
  * @author Admin
@@ -13,8 +16,13 @@ public class addNewBook extends javax.swing.JFrame {
     /**
      * Creates new form addNewBook
      */
+    ResourceBundle messages;
+    
+
     public addNewBook() {
         initComponents();
+        messages = ResourceBundle.getBundle("messages", Locale.getDefault());
+
     }
 
     /**
@@ -29,17 +37,17 @@ public class addNewBook extends javax.swing.JFrame {
         title_lbl = new javax.swing.JLabel();
         sn_lbl = new javax.swing.JLabel();
         bookTitle_lbl = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
+        authorlabel = new javax.swing.JLabel();
+        pubshLabel = new javax.swing.JLabel();
+        pricelabel = new javax.swing.JLabel();
+        quantlabel = new javax.swing.JLabel();
         snTextField = new javax.swing.JTextField();
         titleTextField = new javax.swing.JTextField();
         authorTextField = new javax.swing.JTextField();
         publisherTextField = new javax.swing.JTextField();
         priceTextField = new javax.swing.JTextField();
         quntyTextField = new javax.swing.JTextField();
-        submit_btn = new javax.swing.JButton();
+        submit_btnn = new javax.swing.JButton();
         langToggleButton = new javax.swing.JToggleButton();
         back_btn = new javax.swing.JButton();
 
@@ -55,26 +63,31 @@ public class addNewBook extends javax.swing.JFrame {
         bookTitle_lbl.setFont(new java.awt.Font("sansserif", 1, 14)); // NOI18N
         bookTitle_lbl.setText("Title: ");
 
-        jLabel3.setFont(new java.awt.Font("sansserif", 1, 14)); // NOI18N
-        jLabel3.setText("Author:");
+        authorlabel.setFont(new java.awt.Font("sansserif", 1, 14)); // NOI18N
+        authorlabel.setText("Author:");
 
-        jLabel4.setFont(new java.awt.Font("sansserif", 1, 14)); // NOI18N
-        jLabel4.setText("Publisher:");
+        pubshLabel.setFont(new java.awt.Font("sansserif", 1, 14)); // NOI18N
+        pubshLabel.setText("Publisher:");
 
-        jLabel5.setFont(new java.awt.Font("sansserif", 1, 14)); // NOI18N
-        jLabel5.setText("Price");
+        pricelabel.setFont(new java.awt.Font("sansserif", 1, 14)); // NOI18N
+        pricelabel.setText("Price");
 
-        jLabel6.setFont(new java.awt.Font("sansserif", 1, 14)); // NOI18N
-        jLabel6.setText("Quantity:");
+        quantlabel.setFont(new java.awt.Font("sansserif", 1, 14)); // NOI18N
+        quantlabel.setText("Quantity:");
 
-        submit_btn.setText("Add Book");
-        submit_btn.addActionListener(new java.awt.event.ActionListener() {
+        submit_btnn.setText("Add Book");
+        submit_btnn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                submit_btnActionPerformed(evt);
+                submit_btnnActionPerformed(evt);
             }
         });
 
         langToggleButton.setText("FR");
+        langToggleButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                langToggleButtonActionPerformed(evt);
+            }
+        });
 
         back_btn.setText("Back");
         back_btn.addActionListener(new java.awt.event.ActionListener() {
@@ -98,10 +111,10 @@ public class addNewBook extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(bookTitle_lbl)
                             .addComponent(sn_lbl)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel4)
-                            .addComponent(jLabel5)
-                            .addComponent(jLabel6))
+                            .addComponent(authorlabel)
+                            .addComponent(pubshLabel)
+                            .addComponent(pricelabel)
+                            .addComponent(quantlabel))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(titleTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 257, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -115,7 +128,7 @@ public class addNewBook extends javax.swing.JFrame {
                         .addContainerGap()
                         .addComponent(back_btn)
                         .addGap(126, 126, 126)
-                        .addComponent(submit_btn)
+                        .addComponent(submit_btnn)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(langToggleButton, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
@@ -136,21 +149,21 @@ public class addNewBook extends javax.swing.JFrame {
                 .addGap(4, 4, 4)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(authorTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3))
+                    .addComponent(authorlabel))
                 .addGap(3, 3, 3)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
+                    .addComponent(pubshLabel)
                     .addComponent(publisherTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(3, 3, 3)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
+                    .addComponent(pricelabel)
                     .addComponent(priceTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(quntyTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel6))
+                    .addComponent(quantlabel))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(submit_btn)
+                .addComponent(submit_btnn)
                 .addContainerGap(15, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -170,19 +183,30 @@ public class addNewBook extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_back_btnActionPerformed
 
-    private void submit_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submit_btnActionPerformed
+    private void submit_btnnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submit_btnnActionPerformed
         // TODO add your handling code here:
         LibraryController lc = new LibraryController();
-        try
-        {
-            lc.addBook(snTextField.getText(), titleTextField.getText(), authorTextField.getText(), publisherTextField.getText(),Float.parseFloat(priceTextField.getText()), Integer.parseInt(quntyTextField.getText()), 0);
-        }
-        catch(Exception ex)
-        {
+        try {
+            lc.addBook(snTextField.getText(), titleTextField.getText(), authorTextField.getText(), publisherTextField.getText(), Float.parseFloat(priceTextField.getText()), Integer.parseInt(quntyTextField.getText()));
+        } catch (Exception ex) {
             logInLibrarian lil = new logInLibrarian();
             lil.showDialog("Couldn't Add New Book", "ERROR: " + ex.getMessage());
         }
-    }//GEN-LAST:event_submit_btnActionPerformed
+    }//GEN-LAST:event_submit_btnnActionPerformed
+
+    private void langToggleButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_langToggleButtonActionPerformed
+        // TODO add your handling code here:
+        if (langToggleButton.isSelected()) {
+            //french
+            messages = ResourceBundle.getBundle("messages", Locale.FRENCH);
+            updateAddBookTexts();
+
+        } else {
+            //english
+            messages = ResourceBundle.getBundle("messages", Locale.ENGLISH);
+            updateAddBookTexts();
+        }
+    }//GEN-LAST:event_langToggleButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -219,21 +243,32 @@ public class addNewBook extends javax.swing.JFrame {
         });
     }
 
+  private void updateAddBookTexts() {
+    authorlabel.setText(messages.getString("authorlabel"));
+    back_btn.setText(messages.getString("back_btn"));
+    bookTitle_lbl.setText(messages.getString("bookTitle_lbl"));
+    pricelabel.setText(messages.getString("pricelabel"));
+    pubshLabel.setText(messages.getString("pubshLabel"));
+    quantlabel.setText(messages.getString("quantlabel"));
+    sn_lbl.setText(messages.getString("sn_lbl"));
+    submit_btnn.setText(messages.getString("submit_btnn"));
+}
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField authorTextField;
+    private javax.swing.JLabel authorlabel;
     private javax.swing.JButton back_btn;
     private javax.swing.JLabel bookTitle_lbl;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JToggleButton langToggleButton;
     private javax.swing.JTextField priceTextField;
+    private javax.swing.JLabel pricelabel;
     private javax.swing.JTextField publisherTextField;
+    private javax.swing.JLabel pubshLabel;
+    private javax.swing.JLabel quantlabel;
     private javax.swing.JTextField quntyTextField;
     private javax.swing.JTextField snTextField;
     private javax.swing.JLabel sn_lbl;
-    private javax.swing.JButton submit_btn;
+    private javax.swing.JButton submit_btnn;
     private javax.swing.JTextField titleTextField;
     private javax.swing.JLabel title_lbl;
     // End of variables declaration//GEN-END:variables

@@ -146,6 +146,9 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="FR"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="langToggleBtnActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="vL_Heading">
       <Properties>

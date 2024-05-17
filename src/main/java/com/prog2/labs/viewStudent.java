@@ -4,6 +4,9 @@
  */
 package com.prog2.labs;
 
+import java.util.Locale;
+import java.util.ResourceBundle;
+
 /**
  *
  * @author Admin
@@ -14,6 +17,7 @@ public class viewStudent extends javax.swing.JFrame {
      * Creates new form viewStudent
      */
     private Student student;
+    ResourceBundle messages;
 
     LibraryController controller = LibraryController.getInstance();
     
@@ -22,17 +26,17 @@ public class viewStudent extends javax.swing.JFrame {
     public viewStudent() {
         initComponents();
         //student = new Student();
+        messages = ResourceBundle.getBundle("messages", Locale.getDefault());
 
         viewAvailableBooks();
     }
-    
-    public void displayOnLoad()
-    {
+
+    public void displayOnLoad() {
         //chosenBook_txtF
         String output = "";
         output += "|        SN          |- - -Title- - -|    Author    |\n";
         output += student.viewAvailableBooks();
-         displayStud_TxtArea.setText(output);
+        displayStud_TxtArea.setText(output);
     }
 
     private void viewAvailableBooks() {
@@ -68,6 +72,11 @@ public class viewStudent extends javax.swing.JFrame {
         setTitle("Student - Borrow a book");
 
         langTggl_btn.setText("FR");
+        langTggl_btn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                langTggl_btnActionPerformed(evt);
+            }
+        });
 
         displayStud_TxtArea.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
         displayStud_TxtArea.addTextListener(new java.awt.event.TextListener() {
@@ -221,6 +230,7 @@ public class viewStudent extends javax.swing.JFrame {
     private void chosenBook_txtFMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_chosenBook_txtFMouseClicked
         // TODO add your handling code here:
         String output = "";
+<<<<<<< Updated upstream
         if(!searchByBookTitle_txtF.getText().isEmpty())
         {
             String a = controller.student.searchBookByBookTitle(searchByBookTitle_txtF.getText());
@@ -234,27 +244,29 @@ public class viewStudent extends javax.swing.JFrame {
             
                 chosenBook_txtF.setText(output);
             }
-            System.out.println(controller.student.searchBookByBookID(searchByBookTitle_txtF.getText()));
-        }
-        else if(!searchBybookID_txtF.getText().isEmpty())
-        {
-            if(controller.student.searchBookByBookID(searchBybookID_txtF.getText()).equalsIgnoreCase(""))
-            {
+=======
+        if (!searchByBookTitle_txtF.getText().isEmpty()) {
+            if (controller.student.searchBookByBookTitle(searchByBookTitle_txtF.getText()).equalsIgnoreCase("")) {
                 chosenBook_txtF.setText("No book with title '" + searchByBookTitle_txtF.getText() + "' exist!");
             }
-            
+
+            output = controller.student.searchBookByBookTitle(searchByBookTitle_txtF.getText());
+
+            chosenBook_txtF.setText(output);
+>>>>>>> Stashed changes
+            System.out.println(controller.student.searchBookByBookID(searchByBookTitle_txtF.getText()));
+        } else if (!searchBybookID_txtF.getText().isEmpty()) {
+            if (controller.student.searchBookByBookID(searchBybookID_txtF.getText()).equalsIgnoreCase("")) {
+                chosenBook_txtF.setText("No book with title '" + searchByBookTitle_txtF.getText() + "' exist!");
+            }
+
             output = controller.student.searchBookByBookID(searchBybookID_txtF.getText());
             chosenBook_txtF.setText(output.toString());
             System.out.println(controller.student.searchBookByBookID(searchBybookID_txtF.getText()));
-        }
-        else if(!searchByBookTitle_txtF.getText().isEmpty() && !searchBybookID_txtF.getText().isEmpty())
-        {
-            if(controller.student.searchBookByBookID(searchBybookID_txtF.getText()).equalsIgnoreCase(controller.student.searchBookByBookTitle(searchByBookTitle_txtF.getText())))
-            {
+        } else if (!searchByBookTitle_txtF.getText().isEmpty() && !searchBybookID_txtF.getText().isEmpty()) {
+            if (controller.student.searchBookByBookID(searchBybookID_txtF.getText()).equalsIgnoreCase(controller.student.searchBookByBookTitle(searchByBookTitle_txtF.getText()))) {
                 chosenBook_txtF.setText(controller.student.searchBookByBookID(searchBybookID_txtF.getText()));
-            }
-            else
-            {
+            } else {
                 chosenBook_txtF.setText("No book with this title and ID exist!");
             }
         }
@@ -264,6 +276,7 @@ public class viewStudent extends javax.swing.JFrame {
         // TODO add your handling code here:
         Student stud = new Student();
         String studID = studID_txtF.getText();
+<<<<<<< Updated upstream
         bookid = searchBybookID_txtF.getText();
         
             if(!studID_txtF.getText().isEmpty() && !chosenBook_txtF.getText().isEmpty())
@@ -282,7 +295,20 @@ public class viewStudent extends javax.swing.JFrame {
             else
             {
                 System.out.println("Problem #1");
+=======
+
+        if (!studID_txtF.getText().isEmpty() && !chosenBook_txtF.getText().isEmpty()) {
+            stud.studentInfoBorrow = stud.findStudent(chosenBook_txtF.getText(), studID);
+            if (stud.studentInfoBorrow != null) {
+                BorrowBook bb = new BorrowBook();
+                bb.show();
+            } else {
+                System.out.println("shit #2");
+>>>>>>> Stashed changes
             }
+        } else {
+            System.out.println("shit");
+        }
     }//GEN-LAST:event_Borrow_btnActionPerformed
 
     private void back_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_back_btnActionPerformed
@@ -292,6 +318,34 @@ public class viewStudent extends javax.swing.JFrame {
     private void chosenBook_txtFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chosenBook_txtFActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_chosenBook_txtFActionPerformed
+
+    private void langTggl_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_langTggl_btnActionPerformed
+        // TODO add your handling code here:
+
+        if (langTggl_btn.isSelected()) {
+            //french
+            messages = ResourceBundle.getBundle("messages", Locale.FRENCH);
+            updateTexts();
+
+        } else {
+            //english
+            messages = ResourceBundle.getBundle("messages", Locale.ENGLISH);
+            updateTexts();
+        }
+    }//GEN-LAST:event_langTggl_btnActionPerformed
+
+    private void updateTexts() {
+        jLabel1.setText(messages.getString("jLabel1"));
+        back_btn.setText(messages.getString("back_btn"));
+
+        Borrow_btn.setText(messages.getString("Borrow_btn"));
+        Title_lbl.setText(messages.getString("Title_lbl"));
+        bookID_lbl.setText(messages.getString("bookID_lbl"));
+        book_lbl.setText(messages.getString("book_lbl"));
+        jLabel1.setText(messages.getString("jLabel1"));
+        studID_lbl.setText(messages.getString("studID_lbl"));
+        title_lbl.setText(messages.getString("title_lbl"));
+    }
 
     /**
      * @param args the command line arguments

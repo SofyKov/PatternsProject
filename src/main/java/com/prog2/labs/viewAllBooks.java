@@ -4,7 +4,9 @@
  */
 package com.prog2.labs;
 
+import java.util.Locale;
 import java.util.Map;
+import java.util.ResourceBundle;
 
 /**
  *
@@ -14,6 +16,7 @@ public class viewAllBooks extends javax.swing.JFrame {
 
     private String category;
     private Map<String, String> output;
+    ResourceBundle messages;
 
     /**
      * Creates new form viewAllBooks
@@ -23,13 +26,14 @@ public class viewAllBooks extends javax.swing.JFrame {
         setVisible(true);
         this.category = category;
         this.output = output;
+        messages = ResourceBundle.getBundle("messages", Locale.getDefault());
 
         //display the output
         displayBooks(this.output);
 
     }
 
-    private void displayBooks( Map<String, String> output) {
+    private void displayBooks(Map<String, String> output) {
         allBooksTxtArea.setText("");
 
         for (String title : output.keySet()) {
@@ -71,6 +75,11 @@ public class viewAllBooks extends javax.swing.JFrame {
         });
 
         langToggleButton.setText("FR");
+        langToggleButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                langToggleButtonActionPerformed(evt);
+            }
+        });
 
         viewBooksLabel.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         viewBooksLabel.setText("jLabel1");
@@ -132,6 +141,20 @@ public class viewAllBooks extends javax.swing.JFrame {
         //                + output);
     }//GEN-LAST:event_allBooksTxtAreaTextValueChanged
 
+    private void langToggleButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_langToggleButtonActionPerformed
+        // TODO add your handling code here:
+          if (langToggleButton.isSelected()) {
+            //french
+            messages = ResourceBundle.getBundle("messages", Locale.FRENCH);
+            updateTexts();
+
+        } else {
+            //english
+            messages = ResourceBundle.getBundle("messages", Locale.ENGLISH);
+            updateTexts();
+        }
+    }//GEN-LAST:event_langToggleButtonActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -168,6 +191,12 @@ public class viewAllBooks extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
+    }
+
+    private void updateTexts() {
+        backBtn.setText(messages.getString("backBtn"));
+        viewBooksLabel.setText(messages.getString("viewBooksLabel"));
+
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

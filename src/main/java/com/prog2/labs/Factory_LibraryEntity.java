@@ -4,6 +4,8 @@
  */
 package com.prog2.labs;
 
+import java.util.Calendar;
+
 /**
  *
  * @author grech
@@ -33,6 +35,14 @@ public class Factory_LibraryEntity implements Factory_Object {
             default:
                 throw new IllegalArgumentException("Factory: Invalid number of parameter for creating library entities " + params.length);
         }
+    }
+    
+    public Book createBook(String SN, String title, String author, String publisher,
+            float price, int quantity, int issued){
+        
+        
+        return new Book(SN, title, author, publisher, price, quantity);
+    
     }
 
 }
