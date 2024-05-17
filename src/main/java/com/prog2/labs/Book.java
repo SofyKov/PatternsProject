@@ -162,7 +162,7 @@ public class Book {
                 Float pr = resultSet.getFloat("price");
                 int qu = resultSet.getInt("quantity");
                 int is = resultSet.getInt("issued");
-                Date ad = resultSet.getDate("addedDate");
+                String ad = resultSet.getDate("addedDate").toString();
 
                 // Format the book details into a single string
                 String details = String.format("Author: %s\nPublisher: %s\nSN: %s\nPrice: %.2f\nQuantity: %d\nIssued: %d\nAdded Date: %s",

@@ -22,7 +22,15 @@ public class viewStudent extends javax.swing.JFrame {
         //student = new Student();
 
         viewAvailableBooks();
-
+    }
+    
+    public void displayOnLoad()
+    {
+        //chosenBook_txtF
+        String output = "";
+        output += "|        SN          |- - -Title- - -|    Author    |\n";
+        output += student.viewAvailableBooks();
+         displayStud_TxtArea.setText(output);
     }
 
     private void viewAvailableBooks() {
@@ -42,7 +50,6 @@ public class viewStudent extends javax.swing.JFrame {
 
         langTggl_btn = new javax.swing.JToggleButton();
         displayStud_TxtArea = new java.awt.TextArea();
-        back_btn = new javax.swing.JButton();
         Borrow_btn = new javax.swing.JButton();
         Title_lbl = new javax.swing.JLabel();
         studID_lbl = new javax.swing.JLabel();
@@ -54,8 +61,10 @@ public class viewStudent extends javax.swing.JFrame {
         title_lbl = new javax.swing.JLabel();
         searchByBookTitle_txtF = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
+        back_btn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Student - Borrow a book");
 
         langTggl_btn.setText("FR");
 
@@ -63,13 +72,6 @@ public class viewStudent extends javax.swing.JFrame {
         displayStud_TxtArea.addTextListener(new java.awt.event.TextListener() {
             public void textValueChanged(java.awt.event.TextEvent evt) {
                 viewAvilableBooks(evt);
-            }
-        });
-
-        back_btn.setText("Back");
-        back_btn.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                back_btnMousePressed(evt);
             }
         });
 
@@ -93,6 +95,7 @@ public class viewStudent extends javax.swing.JFrame {
 
         chosenBook_txtF.setFont(new java.awt.Font("sansserif", 2, 10)); // NOI18N
         chosenBook_txtF.setForeground(new java.awt.Color(102, 102, 102));
+        chosenBook_txtF.setText("*click here to see*");
         chosenBook_txtF.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 chosenBook_txtFMouseClicked(evt);
@@ -110,6 +113,13 @@ public class viewStudent extends javax.swing.JFrame {
 
         jLabel1.setFont(new java.awt.Font("sansserif", 3, 9)); // NOI18N
         jLabel1.setText("*Enter one or both following fields:*");
+
+        back_btn.setText("Back");
+        back_btn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                back_btnActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -143,7 +153,7 @@ public class viewStudent extends javax.swing.JFrame {
                                     .addComponent(jLabel1))
                                 .addGap(0, 0, Short.MAX_VALUE))))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(back_btn, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(back_btn)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(langTggl_btn))
                     .addGroup(layout.createSequentialGroup()
@@ -180,7 +190,7 @@ public class viewStudent extends javax.swing.JFrame {
                         .addComponent(Borrow_btn))
                     .addComponent(displayStud_TxtArea, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(langTggl_btn)
                     .addComponent(back_btn))
                 .addContainerGap())
@@ -196,11 +206,6 @@ public class viewStudent extends javax.swing.JFrame {
 //                + student.viewAvailableBooks());
     }//GEN-LAST:event_viewAvilableBooks
 
-    private void back_btnMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_back_btnMousePressed
-        // TODO add your handling code here:
-        this.dispose();
-    }//GEN-LAST:event_back_btnMousePressed
-
     private void chosenBook_txtFInputMethodTextChanged(java.awt.event.InputMethodEvent evt) {//GEN-FIRST:event_chosenBook_txtFInputMethodTextChanged
         // TODO add your handling code here:
 
@@ -208,22 +213,70 @@ public class viewStudent extends javax.swing.JFrame {
 
     private void chosenBook_txtFMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_chosenBook_txtFMouseClicked
         // TODO add your handling code here:
-        if (!searchByBookTitle_txtF.getText().isEmpty()) {
-            chosenBook_txtF.setText(student.searchBookByBookTitle(searchByBookTitle_txtF.getText()));
+        String output = "";
+        if(!searchByBookTitle_txtF.getText().isEmpty())
+        {
+            if(student.searchBookByBookTitle(searchByBookTitle_txtF.getText()).equalsIgnoreCase(""))
+            {
+                chosenBook_txtF.setText("No book with title '" + searchByBookTitle_txtF.getText() + "' exist!");
+            }
+            
+            output = student.searchBookByBookTitle(searchByBookTitle_txtF.getText());
+            
+            chosenBook_txtF.setText(output);
             System.out.println(student.searchBookByBookID(searchByBookTitle_txtF.getText()));
-        } else if (!searchBybookID_txtF.getText().isEmpty()) {
-            chosenBook_txtF.setText(student.searchBookByBookID(searchBybookID_txtF.getText()));
+        }
+        else if(!searchBybookID_txtF.getText().isEmpty())
+        {
+            if(student.searchBookByBookID(searchBybookID_txtF.getText()).equalsIgnoreCase(""))
+            {
+                chosenBook_txtF.setText("No book with title '" + searchByBookTitle_txtF.getText() + "' exist!");
+            }
+            
+            output = student.searchBookByBookID(searchBybookID_txtF.getText());
+            chosenBook_txtF.setText(output.toString());
             System.out.println(student.searchBookByBookID(searchBybookID_txtF.getText()));
+        }
+        else if(!searchByBookTitle_txtF.getText().isEmpty() && !searchBybookID_txtF.getText().isEmpty())
+        {
+            if(student.searchBookByBookID(searchBybookID_txtF.getText()).equalsIgnoreCase(student.searchBookByBookTitle(searchByBookTitle_txtF.getText())))
+            {
+                chosenBook_txtF.setText(student.searchBookByBookID(searchBybookID_txtF.getText()));
+            }
+            else
+            {
+                chosenBook_txtF.setText("No book with this title and ID exist!");
+            }
         }
     }//GEN-LAST:event_chosenBook_txtFMouseClicked
 
     private void Borrow_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Borrow_btnActionPerformed
         // TODO add your handling code here:
-
-        //call controller first then
-        //CALL FACTORY CREATEENTITY() HERE, TO MAKE STUDENT OBJECT
-
+        Student stud = new Student();
+        String studID = studID_txtF.getText();
+        
+            if(!studID_txtF.getText().isEmpty() && !chosenBook_txtF.getText().isEmpty())
+            {
+                stud.studentInfoBorrow = stud.findStudent(chosenBook_txtF.getText() ,studID);
+                if(stud.studentInfoBorrow != null)
+                {
+                    BorrowBook bb = new BorrowBook();
+                    bb.show();
+                }
+                else
+                {
+                    System.out.println("shit #2");
+                }
+            }
+            else
+            {
+                System.out.println("shit");
+            }
     }//GEN-LAST:event_Borrow_btnActionPerformed
+
+    private void back_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_back_btnActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_back_btnActionPerformed
 
     /**
      * @param args the command line arguments

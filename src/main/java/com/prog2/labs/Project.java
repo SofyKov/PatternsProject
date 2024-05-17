@@ -18,6 +18,7 @@ public class Project
     {
 
         LibraryGUIView view = new LibraryGUIView();
+        view.show();
      //   Student s = new Student();
      //   s.viewAvailableBooks();
 //            LibraryController c = new LibraryController();
