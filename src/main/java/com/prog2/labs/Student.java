@@ -23,7 +23,7 @@ public class Student implements LibraryObserver
     //LibraryController controller = LibraryController.getInstance();
     private Connection connection;
     LibraryObserver lc ;
-    private Connection con = lc;
+    private Connection con;
 
     String sId;
     String name;
