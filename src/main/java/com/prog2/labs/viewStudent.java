@@ -222,32 +222,32 @@ public class viewStudent extends javax.swing.JFrame {
         String output = "";
         if(!searchByBookTitle_txtF.getText().isEmpty())
         {
-            if(student.searchBookByBookTitle(searchByBookTitle_txtF.getText()).equalsIgnoreCase(""))
+            if(controller.student.searchBookByBookTitle(searchByBookTitle_txtF.getText()).equalsIgnoreCase(""))
             {
                 chosenBook_txtF.setText("No book with title '" + searchByBookTitle_txtF.getText() + "' exist!");
             }
             
-            output = student.searchBookByBookTitle(searchByBookTitle_txtF.getText());
+            output = controller.student.searchBookByBookTitle(searchByBookTitle_txtF.getText());
             
             chosenBook_txtF.setText(output);
-            System.out.println(student.searchBookByBookID(searchByBookTitle_txtF.getText()));
+            System.out.println(controller.student.searchBookByBookID(searchByBookTitle_txtF.getText()));
         }
         else if(!searchBybookID_txtF.getText().isEmpty())
         {
-            if(student.searchBookByBookID(searchBybookID_txtF.getText()).equalsIgnoreCase(""))
+            if(controller.student.searchBookByBookID(searchBybookID_txtF.getText()).equalsIgnoreCase(""))
             {
                 chosenBook_txtF.setText("No book with title '" + searchByBookTitle_txtF.getText() + "' exist!");
             }
             
-            output = student.searchBookByBookID(searchBybookID_txtF.getText());
+            output = controller.student.searchBookByBookID(searchBybookID_txtF.getText());
             chosenBook_txtF.setText(output.toString());
-            System.out.println(student.searchBookByBookID(searchBybookID_txtF.getText()));
+            System.out.println(controller.student.searchBookByBookID(searchBybookID_txtF.getText()));
         }
         else if(!searchByBookTitle_txtF.getText().isEmpty() && !searchBybookID_txtF.getText().isEmpty())
         {
-            if(student.searchBookByBookID(searchBybookID_txtF.getText()).equalsIgnoreCase(student.searchBookByBookTitle(searchByBookTitle_txtF.getText())))
+            if(controller.student.searchBookByBookID(searchBybookID_txtF.getText()).equalsIgnoreCase(controller.student.searchBookByBookTitle(searchByBookTitle_txtF.getText())))
             {
-                chosenBook_txtF.setText(student.searchBookByBookID(searchBybookID_txtF.getText()));
+                chosenBook_txtF.setText(controller.student.searchBookByBookID(searchBybookID_txtF.getText()));
             }
             else
             {

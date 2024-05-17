@@ -19,7 +19,8 @@ import java.util.Date;
 public class Student implements LibraryObserver 
 {
     private static Student instance;
-    private Connection con;
+    LibraryObserver lc ;
+    private Connection con = lc.;
 
     String sId;
     String name;

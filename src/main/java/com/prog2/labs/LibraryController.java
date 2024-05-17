@@ -14,6 +14,8 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -26,13 +28,22 @@ public class LibraryController
     Librarian librarian;
     Book book;
     Student student;
-    private Connection connection;
+    public Connection connection;
 
     private static LibraryController instance;
 
     public LibraryController() {
-        this.connection = connection;
-
+        try 
+        {
+            this.connection = DriverManager.getConnection("jdbc:sqlite:database.sqlite");
+        } 
+        catch (SQLException ex) 
+        {
+            Logger.getLogger(LibraryController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        this.book = new Book();
+        this.student = new Student();
+        this.librarian = new Librarian();
     }
 
     // Static method to get the singleton instance
