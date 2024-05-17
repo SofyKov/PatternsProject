@@ -19,7 +19,8 @@ import java.util.Map;
  *
  * @author grech
  */
-public class LibraryController {
+public class LibraryController 
+{
 
     //Entities
     Librarian librarian;
@@ -35,23 +36,27 @@ public class LibraryController {
     }
 
     // Static method to get the singleton instance
-    public static LibraryController getInstance() {
-        if (instance == null) {
+    public static LibraryController getInstance()
+    {
+        if (instance == null) 
+        {
             instance = new LibraryController();
         }
         return instance;
     }
 
-    public void setLibrarian(Librarian librarian) {
+    public void setLibrarian(Librarian librarian) 
+    {
         this.librarian = librarian;
     }
 
-    public void setStudent(Student student) {
+    public void setStudent(Student student) 
+    {
         this.student = student;
     }
 
-    public Object createEntity(String person, String... params) {
-
+    public Object createEntity(String person, String... params) 
+    {
         //Factory patterns:
         Factory_LibraryEntity entityFactory = new Factory_LibraryEntity();
 
@@ -80,13 +85,15 @@ public class LibraryController {
 
     }
 
-    public Librarian getLibrarian() {
+    public Librarian getLibrarian()
+    {
         return librarian;
     }
 
     //move this later
     public void addBook(String SN, String title, String author, String publisher,
-            float price, int quantity, int issued) {
+            float price, int quantity, int issued) 
+    {
         Book book = new Book(SN, title, author, publisher, price, quantity);
 
         String query = "select * from book.book";

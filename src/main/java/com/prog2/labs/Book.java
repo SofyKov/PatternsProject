@@ -146,14 +146,16 @@ public class Book {
     }
 
     //////////////////////////////////DATABSE QUERIE///////////////////////
-    public Map<String, String> viewCatalog() {
+    public Map<String, String> viewCatalog() 
+    {
         Map<String, String> catalog = new HashMap<>();
         String sql = "SELECT * FROM Book";
 
         try (PreparedStatement statement = connection.prepareStatement(sql); 
                 ResultSet resultSet = statement.executeQuery()) {
 
-            while (resultSet.next()) {
+            while (resultSet.next()) 
+            {
                 // Retrieve book information from the result set
                 String sn = resultSet.getString("sn");
                 String t = resultSet.getString("title");
@@ -162,11 +164,10 @@ public class Book {
                 Float pr = resultSet.getFloat("price");
                 int qu = resultSet.getInt("quantity");
                 int is = resultSet.getInt("issued");
-                Date ad = resultSet.getDate("addedDate");
 
                 // Format the book details into a single string
-                String details = String.format("Author: %s\nPublisher: %s\nSN: %s\nPrice: %.2f\nQuantity: %d\nIssued: %d\nAdded Date: %s",
-                        a, ps, sn, pr, qu, is, ad.toString());
+                String details = String.format("Author: %s\nPublisher: %s\nSN: %s\nPrice: %.2f\nQuantity: %d\nIssued: %d",
+                        a, ps, sn, pr, qu, is);
 
                 // Put the title and details into the map
                 catalog.put(t, details);
@@ -252,4 +253,30 @@ public class Book {
         }
     }
 
+    public boolean returnBook(Book book, Student student) 
+    {
+        try {
+            if (student.toReturn(book)) { // Check if the book is issued to the student
+                // Update the database (increase quantity, decrease issued copies, delete record)
+                String updateBooksQuery = "UPDATE Books SET quantity = quantity + 1, issued = issued - 1 WHERE sn = ?";
+                PreparedStatement updateBooksStmt = connection.prepareStatement(updateBooksQuery);
+                updateBooksStmt.setString(1, this.SN);
+                int rowsAffected = updateBooksStmt.executeUpdate();
+
+                if (rowsAffected > 0) { // If update successful
+                    String deleteIssuedBooksQuery = "DELETE FROM IssuedBooks WHERE SN = ?";
+                    PreparedStatement deleteIssuedBooksStmt = connection.prepareStatement(deleteIssuedBooksQuery);
+                    deleteIssuedBooksStmt.setString(1, this.SN);
+                    int deleteRows = deleteIssuedBooksStmt.executeUpdate();
+
+                    if (deleteRows > 0) { // If delete successful
+                        return true; // Book successfully returned
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false; // Return false if the book was not successfully returned
+    }
 }

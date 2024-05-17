@@ -18,7 +18,7 @@ import java.util.Date;
  */
 public class Student implements LibraryObserver 
 {
-
+    private static Student instance;
     private Connection con;
 
     String sId;
@@ -42,6 +42,14 @@ public class Student implements LibraryObserver
         //this.studentInfoBorrow = studentInfoBorrow;
     }
 
+    public static synchronized Student getInstance() 
+    {
+        if (instance == null) {
+            instance = new Student();
+        }
+        return instance;
+    }
+    
     public String viewAvailableBooks() 
     {
         String sql = "SELECT * FROM Book WHERE quantity > issued;";
@@ -74,7 +82,8 @@ public class Student implements LibraryObserver
         return outputStr;
     }
 
-    public String searchBookByBookID(String searchByBookTitle) {
+    public String searchBookByBookID(String searchByBookTitle) 
+    {
         String sql = "SELECT * FROM Book WHERE quantity > issued;";
         String outputStr = "";
 
@@ -207,6 +216,27 @@ public class Student implements LibraryObserver
         
         return returnDateAsDate;
     }
+    
+     public boolean toReturn(Book book) 
+     {
+        try 
+        {
+            String query = "SELECT COUNT(*) FROM IssuedBooks WHERE SN = ? AND StId = ?";
+            PreparedStatement preparedStatement = con.prepareStatement(query);
+            preparedStatement.setString(1, book.getSN());
+            preparedStatement.setString(2, this.sId); // Assuming studentId is the primary key in Students table
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                int count = resultSet.getInt(1);
+                return count > 0; // Return true if the count is greater than 0, indicating the book is issued to the student
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false; // Return false by default or if an exception occurs
+    }
+
     
     @Override
     public void update(Book book) 

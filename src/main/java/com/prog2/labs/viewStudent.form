@@ -174,6 +174,7 @@
     </Component>
     <Component class="javax.swing.JTextField" name="chosenBook_txtF">
       <Properties>
+        <Property name="editable" type="boolean" value="false"/>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="sansserif" size="10" style="2"/>
         </Property>
@@ -185,6 +186,7 @@
       <Events>
         <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="chosenBook_txtFMouseClicked"/>
         <EventHandler event="inputMethodTextChanged" listener="java.awt.event.InputMethodListener" parameters="java.awt.event.InputMethodEvent" handler="chosenBook_txtFInputMethodTextChanged"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="chosenBook_txtFActionPerformed"/>
       </Events>
     </Component>
     <Component class="javax.swing.JTextField" name="searchBybookID_txtF">

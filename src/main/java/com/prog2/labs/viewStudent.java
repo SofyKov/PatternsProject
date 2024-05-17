@@ -93,6 +93,7 @@ public class viewStudent extends javax.swing.JFrame {
 
         book_lbl.setText("Chosen book:");
 
+        chosenBook_txtF.setEditable(false);
         chosenBook_txtF.setFont(new java.awt.Font("sansserif", 2, 10)); // NOI18N
         chosenBook_txtF.setForeground(new java.awt.Color(102, 102, 102));
         chosenBook_txtF.setText("*click here to see*");
@@ -106,6 +107,11 @@ public class viewStudent extends javax.swing.JFrame {
             }
             public void inputMethodTextChanged(java.awt.event.InputMethodEvent evt) {
                 chosenBook_txtFInputMethodTextChanged(evt);
+            }
+        });
+        chosenBook_txtF.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                chosenBook_txtFActionPerformed(evt);
             }
         });
 
@@ -277,6 +283,10 @@ public class viewStudent extends javax.swing.JFrame {
     private void back_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_back_btnActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_back_btnActionPerformed
+
+    private void chosenBook_txtFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chosenBook_txtFActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_chosenBook_txtFActionPerformed
 
     /**
      * @param args the command line arguments
