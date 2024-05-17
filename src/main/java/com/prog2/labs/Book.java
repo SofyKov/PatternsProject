@@ -212,6 +212,8 @@ public class Book {
         }
         return catalog;
     }
+    
+    //public 
 
     public void addBook(String SN, String title, String author, String publisher,
             float price, int quantity, int issued) {

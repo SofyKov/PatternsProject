@@ -32,11 +32,14 @@ public class Student implements LibraryObserver
 
     public Student() 
     {     
-         try {
+        try 
+        {
             // Establish database connection
             connection = DriverManager.getConnection("jdbc:sqlite:library-books.db");
             System.out.println("\nLibrary Controller: Connected to SQLite database.");
-        } catch (SQLException e) {
+        } 
+         catch (SQLException e) 
+         {
             System.out.println("Error connecting to SQLite database: " + e.getMessage());
         }
     }
@@ -164,10 +167,11 @@ public class Student implements LibraryObserver
                         if(id.equals(studID))
                         {
                             String nameS = resultSet.getString("studentName");
-                            studInfo.add(id);
-                            studInfo.add(nameS);
-                            studInfo.add(chosenBook);
-                            studInfo.add(contact);
+                            studInfo.add(""); //0
+                            studInfo.add(id); //0
+                            studInfo.add(nameS); //1
+                            studInfo.add(chosenBook); //2
+                            studInfo.add(contact); //3
                             studentInfoBorrow.add(studInfo);
                             
                         }

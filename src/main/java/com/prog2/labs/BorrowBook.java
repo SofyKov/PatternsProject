@@ -4,9 +4,14 @@
  */
 package com.prog2.labs;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Random;
 
 /**
  *
@@ -16,18 +21,38 @@ public class BorrowBook extends javax.swing.JFrame {
 
     LibraryController lc = new LibraryController();
     Student student;
+    private Connection connection;
+    
     /**
      * Creates new form BorrowBook
      */
-    public BorrowBook() {
+    public BorrowBook() 
+    {
         initComponents();
         displayOnLoad();
+        CreateConnection();
     }
     
-    public BorrowBook(Student student) {
+    public BorrowBook(Student student) 
+    {
         initComponents();
         displayOnLoad();
         student = student;
+        CreateConnection();
+    }
+    
+    public void CreateConnection()
+    {
+        try 
+        {
+            // Establish database connection
+            connection = DriverManager.getConnection("jdbc:sqlite:library-books.db");
+            System.out.println("\nLibrary Controller: Connected to SQLite database.");
+        } 
+         catch (SQLException e) 
+         {
+            System.out.println("Error connecting to SQLite database: " + e.getMessage());
+        }
     }
     
     private void displayOnLoad()
@@ -115,32 +140,30 @@ public class BorrowBook extends javax.swing.JFrame {
 
     private void confirm_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirm_btnActionPerformed
         // TODO add your handling code here:
-//        String sql = "INSERT INTO IssuedBooks (sn,studentID,studentName,contact,issuedData) VALUES ()";
-//        
-//        try (PreparedStatement statement = connection.prepareStatement(sql)) 
-//        {
-//            try (ResultSet resultSet = statement.executeQuery()) 
-//            {
-//                while (resultSet.next()) 
-//                {
-//                    // Retrieve patient information from the result set
-//                    String sn = resultSet.getString("sn");
-//                    outputStr += sn + " | ";
-//
-//                    String t = resultSet.getString("title");
-//                    outputStr += t + " | ";
-//
-//                    String a = resultSet.getString("author");
-//                    outputStr += a + "\n";
-//
-//                    System.out.println(sn + " " + t + " " + a);
-//                }
-//            }
-//        } 
-//        catch (SQLException e) 
-//        {
-//            System.out.println("SQL Error: " + e.getMessage());
-//        }
+        Random random = new Random();
+        int id = random.nextInt(Integer.MAX_VALUE - 100) + 100;
+        
+        LocalDate currentDate = LocalDate.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        String formattedDate = currentDate.format(formatter);
+        
+        String sql = "INSERT INTO IssuedBooks (id,sn,studentID,studentName,contact,issuedData) VALUES (?, ? ,? , ? , ?, ? )";
+        
+        try (PreparedStatement statement = connection.prepareStatement(sql)) 
+        {
+            statement.setString(1, Integer.toString(id));
+            statement.setString(2, student.studInfo.get(0));
+            statement.setString(3, student.studInfo.get(1));
+            statement.setString(4, student.studInfo.get(2));
+            statement.setString(5, student.studInfo.get(4));
+            statement.setString(6, formattedDate);
+            
+            statement.executeUpdate();
+        } 
+        catch (SQLException e) 
+        {
+            System.out.println("SQL Error: " + e.getMessage());
+        }
     }//GEN-LAST:event_confirm_btnActionPerformed
 
     private void reject_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reject_btnActionPerformed
