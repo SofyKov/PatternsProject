@@ -9,6 +9,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -17,6 +18,9 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * OBSERVABLE
@@ -213,7 +217,108 @@ public class Book {
         return catalog;
     }
     
-    //public 
+    public boolean isAvailableBooks(String sn) 
+    {
+        String sql = "SELECT * FROM Book WHERE sn = " + sn +";";
+        boolean isAvailable = false;
+
+        try (PreparedStatement statement = connection.prepareStatement(sql)) 
+        {
+            try (ResultSet resultSet = statement.executeQuery()) 
+            {
+                while (resultSet.next()) 
+                {
+                   
+                    int quantity = Integer.getInteger(resultSet.getString("quantity"));
+                    
+                    if(quantity > 0)
+                    {
+                        isAvailable = true;
+                    }
+                }
+            }
+        } 
+        catch (SQLException e) 
+        {
+            System.out.println("SQL Error: " + e.getMessage());
+        }
+        return isAvailable;
+    }
+    
+    public void issueBook(String studentID, String bookID)
+    {
+        Student s = new Student();
+        boolean isAvailableBook = isAvailableBooks(bookID);
+        boolean isExistStud = s.validateStudent(studentID);
+        
+        if(isAvailableBook && isExistStud)
+        {
+            this.updateBookMinus( bookID);
+            System.out.println("Remove one copy in quantity");
+            this.updateBookPlus( bookID);
+            System.out.println("Add one copy in issued");
+            
+            addToIssuedBooksTable(s,bookID,  studentID);
+        }
+    }
+    
+    public void addToIssuedBooksTable(Student student, String bookID, String studentID)
+    {
+        Random random = new Random();
+        int id = random.nextInt(Integer.MAX_VALUE - 100) + 100;
+        
+        LocalDate currentDate = LocalDate.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        String formattedDate = currentDate.format(formatter);
+        
+        String sql = "INSERT INTO IssuedBooks (id,sn,studentID,studentName,contact,issuedData) VALUES (?, ? ,? , ? , ?, ? )";
+        
+        try (PreparedStatement statement = connection.prepareStatement(sql)) 
+        {
+            statement.setString(1, Integer.toString(id));
+            statement.setString(2, bookID);
+            statement.setString(3, studentID);
+            statement.setString(4, student.studInfo.get(2));
+            statement.setString(5, student.studInfo.get(4));
+            statement.setString(6, formattedDate);
+            
+            statement.executeUpdate();
+        } 
+        catch (SQLException e) 
+        {
+            System.out.println("SQL Error: " + e.getMessage());
+        }
+    }
+    
+    public void updateBookMinus(String bookID)
+    {
+        // Update data in the table
+        String updateSQL = "UPDATE Book SET quantity = quantity - 1 WHERE id = ?";
+        try (PreparedStatement statement = connection.prepareStatement(updateSQL)) 
+        {
+            statement.setString(1, bookID);
+            statement.executeUpdate();
+        } 
+        catch (SQLException ex) 
+        {
+            Logger.getLogger(Book.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public void updateBookPlus(String bookID)
+    {
+        String updateSQL = "UPDATE Book SET issued = issued + 1 WHERE id = ?";
+        try (PreparedStatement statement = connection.prepareStatement(updateSQL)) 
+        {
+            statement.setString(1, bookID);
+            statement.executeUpdate();
+        } 
+        catch (SQLException ex) 
+        {
+            Logger.getLogger(Book.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
 
     public void addBook(String SN, String title, String author, String publisher,
             float price, int quantity, int issued) {
@@ -257,15 +362,19 @@ public class Book {
 
     public boolean returnBook(Book book, Student student) 
     {
-        try {
-            if (student.toReturn(book)) { // Check if the book is issued to the student
+        try 
+        {
+            if (student.toReturn(book)) 
+            {   // Check if the book is issued to the student
                 // Update the database (increase quantity, decrease issued copies, delete record)
                 String updateBooksQuery = "UPDATE Books SET quantity = quantity + 1, issued = issued - 1 WHERE sn = ?";
                 PreparedStatement updateBooksStmt = connection.prepareStatement(updateBooksQuery);
                 updateBooksStmt.setString(1, this.SN);
                 int rowsAffected = updateBooksStmt.executeUpdate();
 
-                if (rowsAffected > 0) { // If update successful
+                if (rowsAffected > 0) 
+                { 
+                    // If update successful
                     String deleteIssuedBooksQuery = "DELETE FROM IssuedBooks WHERE SN = ?";
                     PreparedStatement deleteIssuedBooksStmt = connection.prepareStatement(deleteIssuedBooksQuery);
                     deleteIssuedBooksStmt.setString(1, this.SN);
@@ -276,7 +385,9 @@ public class Book {
                     }
                 }
             }
-        } catch (SQLException e) {
+        }
+        catch (SQLException e) 
+        {
             e.printStackTrace();
         }
         return false; // Return false if the book was not successfully returned

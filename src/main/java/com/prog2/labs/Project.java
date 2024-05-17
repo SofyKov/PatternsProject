@@ -16,19 +16,7 @@ public class Project
      */
     public static void main(String[] args) throws SQLException 
     {
-
         LibraryGUIView view = new LibraryGUIView();
         view.show();
-     //   Student s = new Student();
-     //   s.viewAvailableBooks();
-//            LibraryController c = new LibraryController();
-//            c.findBook();
-
-       // Student s = new Student();
-        //s.viewAvailableBooks();
     }
-
-    /**
-     * Please refer to the README file for question(s) description
-     */
 }

@@ -16,6 +16,8 @@ public class viewStudent extends javax.swing.JFrame {
     private Student student;
 
     LibraryController controller = LibraryController.getInstance();
+    
+    String bookid = "";
 
     public viewStudent() {
         initComponents();
@@ -262,23 +264,24 @@ public class viewStudent extends javax.swing.JFrame {
         // TODO add your handling code here:
         Student stud = new Student();
         String studID = studID_txtF.getText();
+        bookid = searchBybookID_txtF.getText();
         
             if(!studID_txtF.getText().isEmpty() && !chosenBook_txtF.getText().isEmpty())
             {
-                stud.studentInfoBorrow = stud.findStudent(chosenBook_txtF.getText() ,studID);
+                stud.studentInfoBorrow = stud.findStudent(bookid, chosenBook_txtF.getText() ,studID);
                 if(stud.studentInfoBorrow != null)
                 {
-                    BorrowBook bb = new BorrowBook(stud);
+                    BorrowBook bb = new BorrowBook( controller, stud);
                     bb.show();
                 }
                 else
                 {
-                    System.out.println("shit #2");
+                    System.out.println("Problem #1");
                 }
             }
             else
             {
-                System.out.println("shit");
+                System.out.println("Problem #1");
             }
     }//GEN-LAST:event_Borrow_btnActionPerformed
 

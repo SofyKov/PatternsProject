@@ -62,6 +62,33 @@ public class Student implements LibraryObserver
         return instance;
     }
     
+    public boolean validateStudent(String id)
+    {
+        boolean isExist = false;
+        String sql = "SELECT * FROM Student WHERE studentID = " + id + ";";
+
+        try (PreparedStatement statement = connection.prepareStatement(sql)) 
+        {
+            try (ResultSet resultSet = statement.executeQuery()) 
+            {
+                while (resultSet.next()) 
+                {
+                    String studID = resultSet.getString("studentID");
+                    if(id.equals(studID))
+                    {
+                        isExist = true;
+                    }
+                }
+            }
+        } 
+        catch (SQLException e) 
+        {
+            System.out.println("SQL Error: " + e.getMessage());
+        }
+        return isExist;
+    }
+    
+    
     public String viewAvailableBooks() 
     {
         String sql = "SELECT * FROM Book WHERE quantity > issued;";
@@ -94,6 +121,8 @@ public class Student implements LibraryObserver
         return outputStr;
     }
 
+    
+    
     public String searchBookByBookTitle(String searchByBookTitle) 
     {
         String sql = "SELECT * FROM Book WHERE quantity > issued;";
@@ -150,7 +179,7 @@ public class Student implements LibraryObserver
         return outputStr;
     }
     
-     public ArrayList<ArrayList<String>> findStudent(String chosenBook, String studID)
+     public ArrayList<ArrayList<String>> findStudent(String bookID, String chosenBook, String studID)
     {
         String sql = "SELECT * FROM Student;";
 
@@ -162,25 +191,16 @@ public class Student implements LibraryObserver
                 {
                     String id = resultSet.getString("studentID");
                     String contact = resultSet.getString("contact");
-//                    if(didBorrowBook(studentInfoBorrow) == false)
-//                    {
-                        if(id.equals(studID))
-                        {
-                            String nameS = resultSet.getString("studentName");
-                            studInfo.add(""); //0
-                            studInfo.add(id); //0
-                            studInfo.add(nameS); //1
-                            studInfo.add(chosenBook); //2
-                            studInfo.add(contact); //3
-                            studentInfoBorrow.add(studInfo);
-                            
-                        }
-//                    }
-//                    else
-//                    {
-//                        cantBorrowBook cbb = new cantBorrowBook();
-//                        cbb.show();
-//                    }
+                    if(id.equals(studID))
+                    {
+                        String nameS = resultSet.getString("studentName");
+                        studInfo.add(bookID); //0
+                        studInfo.add(id); //1
+                        studInfo.add(nameS); //2
+                        studInfo.add(chosenBook); //3
+                        studInfo.add(contact); //4
+                        studentInfoBorrow.add(studInfo);
+                    }
                 }
             }
         } 

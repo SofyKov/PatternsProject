@@ -20,8 +20,9 @@ import java.util.Random;
 public class BorrowBook extends javax.swing.JFrame {
 
     LibraryController lc = new LibraryController();
-    Student student;
+    Student stud;
     private Connection connection;
+    private LibraryController libContl;
     
     /**
      * Creates new form BorrowBook
@@ -33,11 +34,12 @@ public class BorrowBook extends javax.swing.JFrame {
         CreateConnection();
     }
     
-    public BorrowBook(Student student) 
+    public BorrowBook(LibraryController controller, Student student) 
     {
         initComponents();
         displayOnLoad();
-        student = student;
+        stud = student;
+        libContl = controller;
         CreateConnection();
     }
     
@@ -140,30 +142,9 @@ public class BorrowBook extends javax.swing.JFrame {
 
     private void confirm_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirm_btnActionPerformed
         // TODO add your handling code here:
-        Random random = new Random();
-        int id = random.nextInt(Integer.MAX_VALUE - 100) + 100;
-        
-        LocalDate currentDate = LocalDate.now();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-        String formattedDate = currentDate.format(formatter);
-        
-        String sql = "INSERT INTO IssuedBooks (id,sn,studentID,studentName,contact,issuedData) VALUES (?, ? ,? , ? , ?, ? )";
-        
-        try (PreparedStatement statement = connection.prepareStatement(sql)) 
-        {
-            statement.setString(1, Integer.toString(id));
-            statement.setString(2, student.studInfo.get(0));
-            statement.setString(3, student.studInfo.get(1));
-            statement.setString(4, student.studInfo.get(2));
-            statement.setString(5, student.studInfo.get(4));
-            statement.setString(6, formattedDate);
-            
-            statement.executeUpdate();
-        } 
-        catch (SQLException e) 
-        {
-            System.out.println("SQL Error: " + e.getMessage());
-        }
+        String studentID = stud.studInfo.get(1);
+        String bookID = stud.studInfo.get(1);
+        libContl.book.issueBook(studentID, bookID);
     }//GEN-LAST:event_confirm_btnActionPerformed
 
     private void reject_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reject_btnActionPerformed
