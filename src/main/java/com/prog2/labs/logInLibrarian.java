@@ -58,6 +58,7 @@ public class logInLibrarian extends javax.swing.JFrame {
         back_btn = new javax.swing.JButton();
         errorLabel = new javax.swing.JLabel();
         jToggleButton2 = new javax.swing.JToggleButton();
+        langToggleButton = new javax.swing.JToggleButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Librarian - Log In");
@@ -112,6 +113,13 @@ public class logInLibrarian extends javax.swing.JFrame {
             }
         });
 
+        langToggleButton.setText("FR");
+        langToggleButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                langToggleButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -127,11 +135,6 @@ public class logInLibrarian extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(back_btn)
-                        .addGap(103, 103, 103)
-                        .addComponent(submitButton))
-                    .addGroup(layout.createSequentialGroup()
                         .addGap(46, 46, 46)
                         .addComponent(libID_lbl)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -142,6 +145,17 @@ public class logInLibrarian extends javax.swing.JFrame {
                         .addGap(179, 179, 179)
                         .addComponent(jLabel1)))
                 .addGap(0, 5, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(back_btn)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(103, 103, 103)
+                        .addComponent(submitButton))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(langToggleButton)
+                        .addGap(16, 16, 16))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -165,7 +179,9 @@ public class logInLibrarian extends javax.swing.JFrame {
                         .addComponent(submitButton)
                         .addGap(33, 33, 33))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(back_btn)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(back_btn)
+                            .addComponent(langToggleButton))
                         .addContainerGap())))
         );
 
@@ -243,6 +259,21 @@ public class logInLibrarian extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jToggleButton2ActionPerformed
 
+    private void langToggleButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_langToggleButtonActionPerformed
+        // TODO add your handling code here:
+
+        if (langToggleButton.isSelected()) {
+            //french
+            messages = ResourceBundle.getBundle("messages", Locale.FRENCH);
+            updateTexts();
+
+        } else {
+            //english
+            messages = ResourceBundle.getBundle("messages", Locale.ENGLISH);
+            updateTexts();
+        }
+    }//GEN-LAST:event_langToggleButtonActionPerformed
+
     public void showDialog(String title, String message) {
         // Create a new JFrame to act as the small screen
         JFrame dialogFrame = new JFrame(title);
@@ -300,12 +331,21 @@ public class logInLibrarian extends javax.swing.JFrame {
         });
     }
 
+    private void updateTexts() {
+        jLabel1.setText(messages.getString("jLabel1"));
+        libID_lbl.setText(messages.getString("libID_lbl"));
+        libPsswd_lbl.setText(messages.getString("libPsswd_lbl"));
+        submitButton.setText(messages.getString("submitButton"));
+        errorLabel.setText(messages.getString("errorLabel"));
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton back_btn;
     private javax.swing.JLabel errorLabel;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JOptionPane jOptionPane2;
     private javax.swing.JToggleButton jToggleButton2;
+    private javax.swing.JToggleButton langToggleButton;
     private javax.swing.JLabel libID_lbl;
     private javax.swing.JTextField libIdTextBox;
     private javax.swing.JPasswordField libPasswordField;

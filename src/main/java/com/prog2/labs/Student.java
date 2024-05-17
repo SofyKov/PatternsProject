@@ -20,7 +20,7 @@ public class Student implements LibraryObserver
 {
     private static Student instance;
     LibraryObserver lc ;
-    private Connection con = lc.;
+    private Connection con = lc;
 
     String sId;
     String name;
