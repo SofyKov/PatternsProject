@@ -283,6 +283,7 @@ public class Book {
             statement.setString(6, formattedDate);
             
             statement.executeUpdate();
+            System.out.println("Succesffulyy Added!");
         } 
         catch (SQLException e) 
         {

@@ -145,6 +145,8 @@ public class BorrowBook extends javax.swing.JFrame {
         String studentID = stud.studInfo.get(1);
         String bookID = stud.studInfo.get(1);
         libContl.book.issueBook(studentID, bookID);
+        System.out.println("In borrow book");
+        this.dispose();
     }//GEN-LAST:event_confirm_btnActionPerformed
 
     private void reject_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reject_btnActionPerformed
