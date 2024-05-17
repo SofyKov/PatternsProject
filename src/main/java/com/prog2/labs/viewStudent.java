@@ -35,8 +35,7 @@ public class viewStudent extends javax.swing.JFrame {
 
     private void viewAvailableBooks() {
 
-        displayStud_TxtArea.setText("|       SN        |- - -Title- - -|    Author    |\n"
-                + controller.viewAllBooks());
+        displayStud_TxtArea.setText("|       SN        |- - -Title- - -|    Author    |\n" + controller.viewAllBooks());
     }
 
     /**
@@ -222,14 +221,17 @@ public class viewStudent extends javax.swing.JFrame {
         String output = "";
         if(!searchByBookTitle_txtF.getText().isEmpty())
         {
+            String a = controller.student.searchBookByBookTitle(searchByBookTitle_txtF.getText());
             if(controller.student.searchBookByBookTitle(searchByBookTitle_txtF.getText()).equalsIgnoreCase(""))
             {
                 chosenBook_txtF.setText("No book with title '" + searchByBookTitle_txtF.getText() + "' exist!");
             }
+            else
+            {
+                output = controller.student.searchBookByBookTitle(searchByBookTitle_txtF.getText());
             
-            output = controller.student.searchBookByBookTitle(searchByBookTitle_txtF.getText());
-            
-            chosenBook_txtF.setText(output);
+                chosenBook_txtF.setText(output);
+            }
             System.out.println(controller.student.searchBookByBookID(searchByBookTitle_txtF.getText()));
         }
         else if(!searchBybookID_txtF.getText().isEmpty())
@@ -266,7 +268,7 @@ public class viewStudent extends javax.swing.JFrame {
                 stud.studentInfoBorrow = stud.findStudent(chosenBook_txtF.getText() ,studID);
                 if(stud.studentInfoBorrow != null)
                 {
-                    BorrowBook bb = new BorrowBook();
+                    BorrowBook bb = new BorrowBook(stud);
                     bb.show();
                 }
                 else

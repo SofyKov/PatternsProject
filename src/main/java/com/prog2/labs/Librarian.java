@@ -19,7 +19,8 @@ public class Librarian implements LibraryObserver {
     private String id;
     private Connection connection;
 
-    public Librarian() {
+    public Librarian() 
+    {
         try {
             // Establish database connection
             connection = DriverManager.getConnection("jdbc:sqlite:library-books.db");

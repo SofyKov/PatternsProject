@@ -23,7 +23,6 @@ import java.util.logging.Logger;
  */
 public class LibraryController 
 {
-
     //Entities
     Librarian librarian;
     Book book;

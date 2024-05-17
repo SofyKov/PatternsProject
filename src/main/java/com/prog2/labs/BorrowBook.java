@@ -4,12 +4,18 @@
  */
 package com.prog2.labs;
 
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 /**
  *
  * @author Admin
  */
 public class BorrowBook extends javax.swing.JFrame {
 
+    LibraryController lc = new LibraryController();
+    Student student;
     /**
      * Creates new form BorrowBook
      */
@@ -18,13 +24,17 @@ public class BorrowBook extends javax.swing.JFrame {
         displayOnLoad();
     }
     
+    public BorrowBook(Student student) {
+        initComponents();
+        displayOnLoad();
+        student = student;
+    }
+    
     private void displayOnLoad()
     {
-        Student s = new Student();
-        
         String output = "";
-        output += "You have been allowed to borrow the book!\n";
-        output += "You must return the book by " + s.calculateReturnDate().toString() + "\n";
+        output += "You have been allowed to borrow the book!" +"\n";
+        output += "You must return the book by " + lc.student.calculateReturnDate().toString() + "\n";
         output += "\nThank you and have a good day :)";
         
         succesBorrow_TxtArea.setText(output);
@@ -105,7 +115,32 @@ public class BorrowBook extends javax.swing.JFrame {
 
     private void confirm_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirm_btnActionPerformed
         // TODO add your handling code here:
-
+//        String sql = "INSERT INTO IssuedBooks (sn,studentID,studentName,contact,issuedData) VALUES ()";
+//        
+//        try (PreparedStatement statement = connection.prepareStatement(sql)) 
+//        {
+//            try (ResultSet resultSet = statement.executeQuery()) 
+//            {
+//                while (resultSet.next()) 
+//                {
+//                    // Retrieve patient information from the result set
+//                    String sn = resultSet.getString("sn");
+//                    outputStr += sn + " | ";
+//
+//                    String t = resultSet.getString("title");
+//                    outputStr += t + " | ";
+//
+//                    String a = resultSet.getString("author");
+//                    outputStr += a + "\n";
+//
+//                    System.out.println(sn + " " + t + " " + a);
+//                }
+//            }
+//        } 
+//        catch (SQLException e) 
+//        {
+//            System.out.println("SQL Error: " + e.getMessage());
+//        }
     }//GEN-LAST:event_confirm_btnActionPerformed
 
     private void reject_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reject_btnActionPerformed

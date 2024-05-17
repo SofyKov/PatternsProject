@@ -5,6 +5,7 @@
 package com.prog2.labs;
 
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -19,8 +20,8 @@ import java.util.Date;
 public class Student implements LibraryObserver 
 {
     private static Student instance;
-    LibraryObserver lc ;
-    private Connection con = lc.;
+    //LibraryController controller = LibraryController.getInstance();
+    private Connection connection;
 
     String sId;
     String name;
@@ -31,6 +32,13 @@ public class Student implements LibraryObserver
 
     public Student() 
     {     
+         try {
+            // Establish database connection
+            connection = DriverManager.getConnection("jdbc:sqlite:library-books.db");
+            System.out.println("\nLibrary Controller: Connected to SQLite database.");
+        } catch (SQLException e) {
+            System.out.println("Error connecting to SQLite database: " + e.getMessage());
+        }
     }
     
     public Student(String id, String name, String contact) 
@@ -56,7 +64,7 @@ public class Student implements LibraryObserver
         String sql = "SELECT * FROM Book WHERE quantity > issued;";
         String outputStr = "";
 
-        try (PreparedStatement statement = con.prepareStatement(sql)) 
+        try (PreparedStatement statement = connection.prepareStatement(sql)) 
         {
             try (ResultSet resultSet = statement.executeQuery()) 
             {
@@ -83,12 +91,12 @@ public class Student implements LibraryObserver
         return outputStr;
     }
 
-    public String searchBookByBookID(String searchByBookTitle) 
+    public String searchBookByBookTitle(String searchByBookTitle) 
     {
         String sql = "SELECT * FROM Book WHERE quantity > issued;";
         String outputStr = "";
 
-        try (PreparedStatement statement = con.prepareStatement(sql)) {
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
             try (ResultSet resultSet = statement.executeQuery()) {
                 while (resultSet.next()) {
                     // Retrieve book information from the result set
@@ -109,13 +117,17 @@ public class Student implements LibraryObserver
         return outputStr;
     }
 
-    public String searchBookByBookTitle(String searchByBookID) {
+    public String searchBookByBookID(String searchByBookID) 
+    {
         String sql = "SELECT * FROM Book WHERE quantity > issued;";
         String outputStr = "";
 
-        try (PreparedStatement statement = con.prepareStatement(sql)) {
-            try (ResultSet resultSet = statement.executeQuery()) {
-                while (resultSet.next()) {
+        try (PreparedStatement statement = connection.prepareStatement(sql)) 
+        {
+            try (ResultSet resultSet = statement.executeQuery()) 
+            {
+                while (resultSet.next()) 
+                {
                     // Retrieve book information from the result set
                     String sn = resultSet.getString("sn");
 
@@ -139,13 +151,14 @@ public class Student implements LibraryObserver
     {
         String sql = "SELECT * FROM Student;";
 
-        try (PreparedStatement statement = con.prepareStatement(sql)) 
+        try (PreparedStatement statement = connection.prepareStatement(sql)) 
         {
             try (ResultSet resultSet = statement.executeQuery()) 
             {
                 while (resultSet.next()) 
                 {
                     String id = resultSet.getString("studentID");
+                    String contact = resultSet.getString("contact");
 //                    if(didBorrowBook(studentInfoBorrow) == false)
 //                    {
                         if(id.equals(studID))
@@ -154,6 +167,7 @@ public class Student implements LibraryObserver
                             studInfo.add(id);
                             studInfo.add(nameS);
                             studInfo.add(chosenBook);
+                            studInfo.add(contact);
                             studentInfoBorrow.add(studInfo);
                             
                         }
@@ -178,7 +192,7 @@ public class Student implements LibraryObserver
         boolean borrowed = true;
         String sql = "SELECT * FROM BorrowedBooks;";
 
-        try (PreparedStatement statement = con.prepareStatement(sql)) 
+        try (PreparedStatement statement = connection.prepareStatement(sql)) 
         {
             try (ResultSet resultSet = statement.executeQuery()) 
             {
@@ -223,7 +237,7 @@ public class Student implements LibraryObserver
         try 
         {
             String query = "SELECT COUNT(*) FROM IssuedBooks WHERE SN = ? AND StId = ?";
-            PreparedStatement preparedStatement = con.prepareStatement(query);
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, book.getSN());
             preparedStatement.setString(2, this.sId); // Assuming studentId is the primary key in Students table
             ResultSet resultSet = preparedStatement.executeQuery();

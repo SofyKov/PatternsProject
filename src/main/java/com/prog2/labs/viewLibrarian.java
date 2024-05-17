@@ -194,9 +194,6 @@ public class viewLibrarian extends javax.swing.JFrame {
     private void issueABook_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_issueABook_btnActionPerformed
         // TODO add your handling code here:
         
-        
-        
-        
     }//GEN-LAST:event_issueABook_btnActionPerformed
 
     private void returnBook_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_returnBook_btnActionPerformed
